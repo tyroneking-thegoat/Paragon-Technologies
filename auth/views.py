@@ -3,8 +3,13 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
 from csce4901 import settings
+from . tokens import make_token
 
 # Create your views here.
 def index(request):
@@ -50,17 +55,34 @@ def signup(request):
             return redirect('signup')
         
         user = User.objects.create_user(username, email, password1)
+        user.is_active = False
         
         user.save()
         
-        messages.success(request, "Account registered.")
+        messages.success(request, "Account created. Confirmation email has been sent to your email in order to activate your account.")
         
-        # Email
-        subject = "CSCE4901 OCR"
-        body = "Confirmation link to activate your account."
-        sender = settings.EMAIL_HOST_USER
-        recipient = [user.email]
-        send_mail(subject, body, sender, recipient, fail_silently = True)
+        # Account Confirmation Email
+        url = get_current_site(request)
+        subject = "CSCE4901 - Paragon Technologies"
+        body = render_to_string('email.html', {
+            'user': user.username,
+            'domain': url.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': make_token.make_token(user),
+        })
+  
+        email = EmailMessage(
+            subject,
+            body,
+            settings.EMAIL_HOST_USER,
+            [user.email],
+        )
+        email.fail_silently = True
+        email.send()
+        
+        #sender = settings.EMAIL_HOST_USER
+        #recipient = [user.email]
+        #send_mail(subject, body, sender, recipient, fail_silently = True)
         
         return redirect('signin')
     
@@ -76,3 +98,19 @@ def signout(request):
     messages.success(request, "Logged Out.")
     
     return redirect('index')
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk = uid)
+    
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+        
+    if user is not None and make_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return redirect('signin')
+    
+    else:
+        return render(request, 'email_fail.html')
