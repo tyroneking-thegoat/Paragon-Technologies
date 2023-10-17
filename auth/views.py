@@ -10,6 +10,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from csce4901 import settings
 from . tokens import make_token
+import re
 
 # Create your views here.
 def index(request):
@@ -50,6 +51,12 @@ def signup(request):
             messages.error(request, "Email already registered.")
             return redirect('signup')
         
+        email_domain = re.search(r"@[\w.]+", email)
+        #print(email_domain)
+        if email_domain.group() != "@my.unt.edu":
+            messages.error(request, "Email is not a UNT email.")
+            return redirect('signup')
+        
         if password1 != password2:
             messages.error(request, "Passwords aren't matching.")
             return redirect('signup')
@@ -79,10 +86,6 @@ def signup(request):
         )
         email.fail_silently = True
         email.send()
-        
-        #sender = settings.EMAIL_HOST_USER
-        #recipient = [user.email]
-        #send_mail(subject, body, sender, recipient, fail_silently = True)
         
         return redirect('signin')
     
