@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail, EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from csce4901 import settings
@@ -27,7 +28,8 @@ def signin(request):
         
         if user is not None:
             login(request, user)
-            return render(request, "auth/home.html")
+            #return render(request, "course/home.html")
+            return redirect('Course:home')
             
         else:
             messages.error(request, "Incorrect username or password.")
@@ -91,7 +93,7 @@ def signup(request):
     
     return render(request, "auth/signup.html")
 
-def home(request):
+#def home(request):
     
     return render(request, "auth/home.html")
 
