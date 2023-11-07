@@ -6,4 +6,4 @@ class Course(models.Model):
     number = models.PositiveSmallIntegerField()
     
     def __str__(self):
-        return self.name + ' ' + str(self.number)
+        return self.name + str(self.number)

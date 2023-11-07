@@ -10,11 +10,7 @@ def home(request):
 
 def courses(request):
     
-    courses_table = Course.objects.all
-    courses_name = Course.objects.name + str(Course.number)
-    
-    return render(request, "course/courses.html", {'table':courses_table,
-                                                   'name':courses_name})
+    return render(request, "course/courses.html")
 
 def csce1030(request):
     
