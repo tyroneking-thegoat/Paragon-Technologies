@@ -28,7 +28,6 @@ def signin(request):
         
         if user is not None:
             login(request, user)
-            #return render(request, "course/home.html")
             return redirect('Course:home')
             
         else:
@@ -92,10 +91,6 @@ def signup(request):
         return redirect('signin')
     
     return render(request, "auth/signup.html")
-
-#def home(request):
-    
-    return render(request, "auth/home.html")
 
 def signout(request):
     
