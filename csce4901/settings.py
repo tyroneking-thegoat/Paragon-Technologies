@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-fy13%-wi8qhd85+pi2&cdcwya!@a&v#*zc4#r9eva2=o&%*39y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+CSRF_TRUSTED_ORIGINS = ['https://localhost:8000']
 
 # Email
 EMAIL_USE_TLS = EMAIL_USE_TLS
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'course',
     'ocr',
+    'home',
 ]
 
 MIDDLEWARE = [
