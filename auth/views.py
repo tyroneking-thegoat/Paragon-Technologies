@@ -119,3 +119,7 @@ def activate(request, uidb64, token):
     
     else:
         return render(request, 'email_fail.html')
+    
+def courses(request):
+    
+    return redirect('Course:courses')

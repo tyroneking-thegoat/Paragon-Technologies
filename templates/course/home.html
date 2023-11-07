@@ -7,7 +7,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Home</title>
+        <title>{% block title %}Home{% endblock %}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
@@ -25,13 +25,16 @@
         {% endfor %}
 
         {% if user.is_authenticated %}
+        {% block body %}
 
-        <h3>Logged in!</h3>
-        <button type = "submit">Home</a></button>
-        <button type = "submit">Courses</a></button>
-        <button type = "submit">Upload</a></button>
-        <button type = "submit"><a href = "/signout">Sign Out</a></button>
+        <h3>Welcome!</h3>
 
+        <a href="">Home</a>
+        <a href="/courses">Courses</a>
+        <a href="">Upload</a>
+        <a href = "/signout">Sign Out</a>
+
+        {% endblock %}
         {% endif %}
         
         <script src="" async defer></script>

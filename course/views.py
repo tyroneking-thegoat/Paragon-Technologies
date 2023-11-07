@@ -6,3 +6,7 @@ from csce4901 import settings
 def home(request):
     
     return render(request, "course/home.html")
+
+def courses(request):
+    
+    return render(request, "course/courses.html")
