@@ -123,3 +123,15 @@ def activate(request, uidb64, token):
 def courses(request):
     
     return redirect('Course:courses')
+
+def csce1030(request):
+    
+    return redirect('Course:csce1030')
+
+def csce2100(request):
+    
+    return redirect('Course:csce2100')
+
+def csce3600(request):
+    
+    return redirect('Course:csce3600')

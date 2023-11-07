@@ -1,10 +1,10 @@
-{% extends 'course/home.html' %}
+{% extends 'course/CSCE1030.html' %}
 
-{% block title %}Courses{% endblock  %}
+{% block title %}CSCE 2100{% endblock  %}
 
 {% block body %}
 
-<h3>Courses</h3>
+<h3>CSCE 2100</h3>
 
 <a href="/home"><strong>Home</strong></a>
 <a href="/courses"><strong>Courses</strong></a>
@@ -12,9 +12,7 @@
 <a href = "/signout"><strong>Sign Out</strong></a><br/><br/>
 <hr>
 
-{% for courses in table %}
 
-<p><a href={{ name }}>{{ courses }}</a></p>
 
 {% endfor %}
 
