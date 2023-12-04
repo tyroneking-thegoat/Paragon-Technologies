@@ -10,7 +10,9 @@ def home(request):
 
 def courses(request):
     
-    return render(request, "course/courses.html")
+    courseList = Course.objects.all
+    
+    return render(request, "course/courses.html", {'list': courseList})
 
 def csce1030(request):
     

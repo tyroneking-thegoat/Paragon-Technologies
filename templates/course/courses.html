@@ -3,9 +3,14 @@
 {% block title %}Courses{% endblock  %}
 
 {% block body %}
-
+<!--
 <p><a href=/csce1030>CSCE 1030</a></p>
 <p><a href=/csce2100>CSCE 2100</a></p>
 <p><a href=/csce3600>CSCE 3600</a></p>
+-->
+
+{% for item in list %}
+    <p><a href=/{{item}}>{{item}}</a></p>
+{% endfor%}
 
 {% endblock  %}
