@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'course',
     'ocr',
     'home',
+    'upload',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,21 @@
+{% extends 'upload/home.html' %}
+
+{% block title %}Upload{% endblock %}
+
+{% block body %}
+    <h2>Welcome to the File Upload Page</h2>
+    <form method="post" enctype="multipart/form-data" action="{% url 'upload:upload' %}">
+        {% csrf_token %}
+        <div>
+            <label for="file">Select a PDF file:</label>
+            <input type="file" name="file" id="file" accept=".pdf" required>
+        </div>
+        <div>
+            <label for="folder_name">Course:</label>
+            <input type="text" name="folder_name" id="folder_name" required>
+        </div>
+        <div>
+            <button type="submit">Upload</button>
+        </div>
+    </form>
+{% endblock %}
