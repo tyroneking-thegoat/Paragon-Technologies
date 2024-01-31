@@ -11,7 +11,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from csce4901 import settings
 from . tokens import make_token
-import re
+import re, os
 
 # Create your views here.
 def index(request):
@@ -68,6 +68,15 @@ def signup(request):
         user.save()
         
         messages.success(request, "Account created. Confirmation email has been sent to your email in order to activate your account.")
+
+        # Create the folder for user settings if it doesn't exist
+        userSettings_folder = 'userSettings'
+        if not os.path.exists(userSettings_folder):
+            os.makedirs(userSettings_folder)
+
+        # Create text file for the new user {can later move this to only create once account is verified}
+        # Is also currently not linked to the django database (deleting a user in django won't delete the file locally)
+        userSettings_file = open(f'{userSettings_folder}/{username}.txt', "w+")
         
         # Account Confirmation Email
         url = get_current_site(request)
