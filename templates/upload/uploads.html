@@ -3,19 +3,52 @@
 {% block title %}Upload{% endblock %}
 
 {% block body %}
-    <h2>Welcome to the File Upload Page</h2>
-    <form method="post" enctype="multipart/form-data" action="{% url 'upload:upload' %}">
+<div class="container">
+    <h2 class="mt-5">Welcome to the File Upload Page</h2>
+    <form class="mt-4" id="uploadForm" method="post" enctype="multipart/form-data" action="{% url 'upload:upload' %}" onsubmit="return validateForm()">
         {% csrf_token %}
-        <div>
+        <div class="form-group">
             <label for="file">Select a PDF file:</label>
-            <input type="file" name="file" id="file" accept=".pdf" required>
+            <input type="file" class="form-control-file" name="file" id="file" accept=".pdf" required>
         </div>
-        <div>
+        <div class="form-group">
             <label for="folder_name">Course:</label>
-            <input type="text" name="folder_name" id="folder_name" required>
+            <select class="form-control" name="folder_name" id="folder_name" required onchange="toggleTextInput()">
+                <option value="" disabled selected>Select Course</option>
+                <option value="CSCE 1010">CSCE 1010</option>
+                <option value="other">Other</option>
+            </select>
+            <input type="text" class="form-control mt-2 d-none" name="other_course" id="other_course" placeholder="Enter other course" pattern="[A-Z]{4} \d{4}" title="Please enter 4 capital letters followed by 4 numbers separated by one space">
         </div>
-        <div>
-            <button type="submit">Upload</button>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Upload</button>
         </div>
     </form>
+</div>
+
+<script>
+function toggleTextInput() {
+    var selectElement = document.getElementById("folder_name");
+    var otherTextInput = document.getElementById("other_course");
+    if (selectElement.value === "other") {
+        otherTextInput.classList.remove("d-none");
+        otherTextInput.setAttribute("name", "folder_name"); // Change the name attribute to match folder_name
+    } else {
+        otherTextInput.classList.add("d-none");
+        otherTextInput.removeAttribute("name"); // Remove the name attribute if "other" is not selected
+    }
+}
+
+function validateForm() {
+    var selectElement = document.getElementById("folder_name");
+    var otherTextInput = document.getElementById("other_course");
+
+    if (selectElement.value === "other" && otherTextInput.value.trim() === "") {
+        alert("Please enter a folder name for 'Other'.");
+        return false; // Prevent form submission if "other" is selected and text input field is empty
+    }
+
+    return true;
+}
+</script>
 {% endblock %}
