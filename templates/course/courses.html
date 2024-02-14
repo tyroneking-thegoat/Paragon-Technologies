@@ -1,18 +1,29 @@
 {% extends 'course/home.html' %}
 
-{% block title %}Courses{% endblock  %}
+{% block title %}Courses{% endblock %}
 
 {% block body %}
-
-{% for folder, files in folders_with_files %}
-    <h3>{{ folder }}</h3>
-    <ul>
-        {% for file in files %}
-            <li><a href="{% url 'Course:view_pdf' folder=folder filename=file %}">{{ file }}</a></li>
+<div class="container">
+    <h2 class="mt-5">Courses</h2>
+    {% if folders_with_files %}
+        {% for folder, files in folders_with_files %}
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h3 class="card-title">{{ folder }}</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for file in files %}
+                            <li class="list-group-item">
+                                <a href="{% url 'Course:view_pdf' folder=folder filename=file %}">{{ file }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
-{% empty %}
-    <p>No courses available</p>
-{% endfor %}
-
+    {% else %}
+        <p class="mt-3">No courses available</p>
+    {% endif %}
+</div>
 {% endblock %}
