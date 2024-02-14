@@ -3,19 +3,69 @@
 {% block title %}Upload{% endblock %}
 
 {% block body %}
-    <h2>Welcome to the File Upload Page</h2>
-    <form method="post" enctype="multipart/form-data" action="{% url 'upload:upload' %}">
-        {% csrf_token %}
-        <div>
-            <label for="file">Select a PDF file:</label>
-            <input type="file" name="file" id="file" accept=".pdf" required>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h2 class="card-title text-center">Welcome to the File Upload Page</h2>
+                    <form id="uploadForm" method="post" enctype="multipart/form-data" action="{% url 'upload:upload' %}" onsubmit="return validateForm()">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="file">Select a PDF file:</label>
+                            <input type="file" class="form-control-file" name="file" id="file" accept=".pdf" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control mt-2" id="searchFolders" placeholder="Search Courses...">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control mt-2" name="folder_name" id="folder_name" required onchange="toggleTextInput()">
+                                <option value="" disabled selected>Select Course</option>
+                                {% for folder_name in folder_names %}
+                                    <option value="{{ folder_name }}">{{ folder_name }}</option>
+                                {% endfor %}
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control mt-2 d-none" name="other_course" id="other_course" placeholder="Enter other course" pattern="[A-Z]{4} \d{4}" title="Please enter 4 capital letters followed by 4 numbers separated by one space">
+                        </div>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-success">Upload</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="folder_name">Course:</label>
-            <input type="text" name="folder_name" id="folder_name" required>
-        </div>
-        <div>
-            <button type="submit">Upload</button>
-        </div>
-    </form>
+    </div>
+</div>
+
+<script>
+function toggleTextInput() {
+    var selectElement = document.getElementById("folder_name");
+    var otherTextInput = document.getElementById("other_course");
+    if (selectElement.value === "other") {
+        otherTextInput.classList.remove("d-none");
+        otherTextInput.setAttribute("name", "folder_name"); // Change the name attribute to match folder_name
+    } else {
+        otherTextInput.classList.add("d-none");
+        otherTextInput.removeAttribute("name"); // Remove the name attribute if "other" is not selected
+    }
+}
+
+document.getElementById("searchFolders").addEventListener("input", function() {
+    var input, filter, select, option, i;
+    input = document.getElementById("searchFolders");
+    filter = input.value.toUpperCase();
+    select = document.getElementById("folder_name");
+    option = select.getElementsByTagName("option");
+    for (i = 0; i < option.length; i++) {
+        if (option[i].value.toUpperCase().indexOf(filter) > -1 || option[i].value === "other") {
+            option[i].style.display = "";
+        } else {
+            option[i].style.display = "none";
+        }
+    }
+});
+</script>
 {% endblock %}
