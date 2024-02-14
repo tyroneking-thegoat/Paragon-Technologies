@@ -3,9 +3,21 @@
 {% block title %}Upload Success{% endblock %}
 
 {% block body %}
-    <h2>File Upload Successful</h2>
-    <p>Your PDF file has been successfully uploaded and saved.</p>
-
-    <a href="/upload">Back</a>
-    
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h2 class="text-center">File Upload Successful</h2>
+                </div>
+                <div class="card-body">
+                    <p class="text-center">Your PDF file has been successfully uploaded and saved.</p>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/upload" class="btn btn-success">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

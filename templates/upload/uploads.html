@@ -12,16 +12,22 @@
             <input type="file" class="form-control-file" name="file" id="file" accept=".pdf" required>
         </div>
         <div class="form-group">
-            <label for="folder_name">Course:</label>
-            <select class="form-control" name="folder_name" id="folder_name" required onchange="toggleTextInput()">
+            <input type="text" class="form-control mt-2" id="searchFolders" placeholder="Search Courses...">
+        </div>
+        <div class="form-group">
+            <select class="form-control mt-2" name="folder_name" id="folder_name" required onchange="toggleTextInput()">
                 <option value="" disabled selected>Select Course</option>
-                <option value="CSCE 1010">CSCE 1010</option>
+                {% for folder_name in folder_names %}
+                    <option value="{{ folder_name }}">{{ folder_name }}</option>
+                {% endfor %}
                 <option value="other">Other</option>
             </select>
+        </div>
+        <div class="form-group">
             <input type="text" class="form-control mt-2 d-none" name="other_course" id="other_course" placeholder="Enter other course" pattern="[A-Z]{4} \d{4}" title="Please enter 4 capital letters followed by 4 numbers separated by one space">
         </div>
         <div class="mt-4">
-            <button type="submit" class="btn btn-primary">Upload</button>
+            <button type="submit" class="btn btn-success">Upload</button>
         </div>
     </form>
 </div>
@@ -39,16 +45,19 @@ function toggleTextInput() {
     }
 }
 
-function validateForm() {
-    var selectElement = document.getElementById("folder_name");
-    var otherTextInput = document.getElementById("other_course");
-
-    if (selectElement.value === "other" && otherTextInput.value.trim() === "") {
-        alert("Please enter a folder name for 'Other'.");
-        return false; // Prevent form submission if "other" is selected and text input field is empty
+document.getElementById("searchFolders").addEventListener("input", function() {
+    var input, filter, select, option, i;
+    input = document.getElementById("searchFolders");
+    filter = input.value.toUpperCase();
+    select = document.getElementById("folder_name");
+    option = select.getElementsByTagName("option");
+    for (i = 0; i < option.length; i++) {
+        if (option[i].value.toUpperCase().indexOf(filter) > -1 || option[i].value === "other") {
+            option[i].style.display = "";
+        } else {
+            option[i].style.display = "none";
+        }
     }
-
-    return true;
-}
+});
 </script>
 {% endblock %}

@@ -1,10 +1,6 @@
 import os
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.http import Http404
-
-# Create your views here.
 from django.shortcuts import render
+from django.http import Http404
 
 def is_pdf(file):
     return file.name.lower().endswith('.pdf')
@@ -33,5 +29,8 @@ def upload(request):
 
         return render(request, 'upload/success.html')
 
-    return render(request, 'upload/uploads.html')
+    base_directory = r'C:\Users\mauro\Desktop\pdfs'
+    folder_names = os.listdir(base_directory)
+
+    return render(request, 'upload/uploads.html', {'folder_names': folder_names})
     

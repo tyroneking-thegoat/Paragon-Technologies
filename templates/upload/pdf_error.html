@@ -3,9 +3,21 @@
 {% block title %}PDF Error{% endblock %}
 
 {% block body %}
-    <h2>Error: Only PDF files are allowed</h2>
-    <p>Please upload a file with a '.pdf' extension.</p>
-    
-    <a href="/upload">Back</a>
-
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h2 class="text-center">Error: Only PDF files are allowed</h2>
+                </div>
+                <div class="card-body">
+                    <p class="text-center">Please upload a file with a '.pdf' extension.</p>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/upload" class="btn btn-success">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
