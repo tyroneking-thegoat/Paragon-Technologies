@@ -12,6 +12,7 @@ from django.utils.encoding import force_bytes, force_str
 from csce4901 import settings
 from . tokens import make_token
 import re, os
+from auth.signals import create_user_info
 
 # Create your views here.
 def index(request):
@@ -63,6 +64,7 @@ def signup(request):
             return redirect('signup')
         
         user = User.objects.create_user(username, email, password1)
+
         user.is_active = False
         
         user.save()
