@@ -29,11 +29,11 @@ DEBUG = True
 CSRF_TRUSTED_ORIGINS = ['https://localhost:8000']
 
 # Email
-EMAIL_USE_TLS = EMAIL_USE_TLS
-EMAIL_HOST = EMAIL_HOST
-EMAIL_HOST_USER = EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
-EMAIL_PORT = EMAIL_PORT
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'notetakertool@gmail.com'
+EMAIL_HOST_PASSWORD = 'pjyw fjmw pbaz dolf'
+EMAIL_PORT = 587
 
 
 # Application definition
