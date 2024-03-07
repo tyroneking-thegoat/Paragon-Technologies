@@ -61,7 +61,20 @@
 
         {% if user.is_authenticated %}
         <div class="content">
-            {% block content %}{% endblock %}
+            {% block content %}
+	        {% block body%}
+		<div class="container>
+                    {% for x in thumbnail %}
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{x.img.url}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{x.title}}</h5>
+                            <a href="#" class="btn btn-primary">View Note</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+	    {% endblock %}
         </div>
         {% endif %}
 
