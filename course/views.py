@@ -1,6 +1,6 @@
 import os
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,Http404
 from csce4901 import settings
 from . models import Course
 from django.http import FileResponse
