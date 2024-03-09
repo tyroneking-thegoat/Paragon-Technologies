@@ -5,8 +5,8 @@ from django.http import Http404
 def upload(request):
         return render(request, "upload/uploads.html")
 
-# def is_pdf(file):
-#     return file.name.lower().endswith('.pdf')
+def is_pdf(file):
+    return file.name.lower().endswith('.pdf')
 
 # def upload(request):
 #     if request.method == 'POST' and request.FILES.get('file'):

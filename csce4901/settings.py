@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'upload',
     'account',
     'user_info',
+    'enrollment_codes',
 ]
 
 MIDDLEWARE = [
