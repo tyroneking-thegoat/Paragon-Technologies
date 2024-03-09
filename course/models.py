@@ -12,13 +12,16 @@ class Course(models.Model):
     #Validates that two courses with the same name and number cannot exist
     def clean(self):
         super().clean()
-        if Course.objects.filter(name=self.name, number=self.number).exists():
+        existing_courses = Course.objects.filter(name=self.name, number=self.number)
+        if self.pk:  # If the instance is being updated
+            existing_courses = existing_courses.exclude(pk=self.pk)
+        if existing_courses.exists():
             raise ValidationError("A course with this name and number already exists.")
 
     def save(self, *args, **kwargs):
-        self.clean()
-        characters = string.ascii_letters + string.digits
-        self.enrollCode = ''.join(random.choice(characters) for _ in range(5))
+        if not self.pk and not self.enrollCode:  # Check if the instance is being created for the first time and enrollCode is empty
+            characters = string.ascii_letters + string.digits
+            self.enrollCode = ''.join(random.choice(characters) for _ in range(5))
         super().save(*args, **kwargs)
 
     def __str__(self):
