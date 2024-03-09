@@ -59,31 +59,25 @@
         <div class="setting-item">
             <label for="code">Enrollment Code:</label>
             <input type="text" id="code" maxlength="5" pattern="[a-zA-Z0-9]+" title="Please enter only alphanumeric characters">
-            <button>Enroll</button>
+            <button onclick="checkEnrollment()">Enroll</button>
         </div>
+    
+        <div id="enrollment-result"></div>
     </div>
-
+    
     <script>
-            /*The Class Enrollment Logic
-            TODO: 
-                  1) Create an enrollment model (holds the course of the corresponding enrollment code)
-                  2) Change the courses model to hold an array of enrollment codes
-                  3) Enforce a system where if the enrollment code is deleted from the course
-                        that specific section no longer exist
-                  4) Allow ability to delete section from enrollment code model in database
-                  5) Changing the enrollment code should be reflected across the database for
-                        that specific sections
-
-                  6) The Enrollment Page should send a GET request towards the django database
-                        searching for the corresponding enrollment code -> class
-                            a) Return "Invalid Enrollment Code" if the course does not exist
-                            b) Return "Invalid Enrollment Code (Special Character Not Allowed)
-                                if non-alphanumeric characters are entered
-                  7) The student should have this section reflected inside of their "Courses"
-                        tab when they enroll (CSS to be discussed)
-                            a) The course/enrollment code should also be reflected inside of
-                               the user information database model
-            */      
+        function checkEnrollment() {
+            var enrollmentCode = document.getElementById("code").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/check-enrollment?code=" + enrollmentCode, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = xhr.responseText;
+                    document.getElementById("enrollment-result").innerHTML = response;
+                }
+            };
+            xhr.send();
+        }
     </script>
 </body>
 
