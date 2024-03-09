@@ -89,11 +89,12 @@ def signup(request):
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'token': make_token.make_token(user),
         })
-  
+
+        verified_sender_email = 'NoteTakerToolPlusBot2@outlook.com'
         email = EmailMessage(
             subject,
             body,
-            settings.EMAIL_HOST_USER,
+            verified_sender_email,
             [user.email],
         )
         email.fail_silently = True
