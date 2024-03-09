@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from enroll import views
+from enrollment_codes import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +25,6 @@ urlpatterns = [
     path('home/', include('course.urls')),
     path('upload/', include('upload.urls')),
     path("account/", include("account.urls")),
-    path('enroll/', views.enroll_view, name='enroll'),
+    path('enroll/', views.enroll, name='enrollment_codes'),
+    path('check-enrollment', views.check_enrollment, name='check_enrollment'),
 ]

@@ -6,9 +6,6 @@ import os
 from django.conf import settings
 import uuid
 
-def is_pdf(file):
-    return file.name.lower().endswith('.pdf')
-
 def get_unique_filename(folder_path, filename):
     original_filename, file_extension = os.path.splitext(filename)
     unique_filename = f"{original_filename}_{uuid.uuid4().hex}{file_extension}"
