@@ -29,7 +29,7 @@
                         <a class="nav-link" href="/home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/course/courses">Courses</a>
+                        <a class="nav-link" href="/courses">Courses</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/upload">Upload</a>
@@ -62,48 +62,14 @@
         </div>
         {% endfor %}
 
-
-        <!-- _____________ content _____________ -->
-
         {% if user.is_authenticated %}
         <div class="content">
-        {% block content %}
-        
-        <div class="container">
-            {% for x in thumbnail %}
-                {% if forloop.first %}
-                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mb-4">
-                {% endif %}
-                <div class="col mb-4">
-                    <div class="card h-100">
-                        <img src="{{x.img.url}}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">{{x.title}}</h5>
-                            <a href="#" class="btn btn-primary">View Note</a>
-                        </div>
-                    </div>
-                </div>
-                {% if forloop.counter|divisibleby:4 %}
-                    </div> <!-- close rows 1 thru n-1 -->
-                    {% if not forloop.last %}
-                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mb-4"> <!-- open rows 2 thru n -->
-                    {% endif %}
-                {% endif %}
-                {% if forloop.last and not forloop.counter|divisibleby:4 %} <!-- <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< SET MAX NUMBER OF CARDS PER ROW HERE -->
-                        </div> <!-- close last row -->
-                {% endif %}
-            {% endfor %}
-        </div>
-
-	    {% endblock %}
+            {% block content %}{% endblock %}
         </div>
         {% endif %}
 
-
-
-
-
         {% block body%}
+
         
 
         {% endblock %}

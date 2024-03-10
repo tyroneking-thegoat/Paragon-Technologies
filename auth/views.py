@@ -13,6 +13,7 @@ from csce4901 import settings
 from . tokens import make_token
 import re, os
 from auth.signals import create_user_info
+from home import views
 
 # Create your views here.
 def index(request):
@@ -29,7 +30,7 @@ def signin(request):
         
         if user is not None:
             login(request, user)
-            return redirect('Course:home')
+            return redirect('home/')
             
         else:
             messages.error(request, "Incorrect username or password.")
@@ -129,16 +130,16 @@ def activate(request, uidb64, token):
     
 def courses(request):
     
-    return redirect('Course:courses')
+    return redirect('courses')
 
 def csce1030(request):
     
-    return redirect('Course:csce1030')
+    return redirect('csce1030')
 
 def csce2100(request):
     
-    return redirect('Course:csce2100')
+    return redirect('csce2100')
 
 def csce3600(request):
     
-    return redirect('Course:csce3600')
+    return redirect('csce3600')

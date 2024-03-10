@@ -19,13 +19,14 @@ from django.urls import path, include
 from enrollment_codes import views
 from django.conf import settings
 from django.conf.urls.static import static
-from home import views
+# from home import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('auth.urls')),
-    path('', include('home.urls')),
-    path('home/', views.home, name='home'),
+    #path('', include('home.urls')),
+    path('home/', include('home.urls')),
+    path('course/', include('course.urls')),
     path('upload/', include('upload.urls')),
     path("account/", include("account.urls")),
     path('enroll/', views.enroll, name='enrollment_codes'),
