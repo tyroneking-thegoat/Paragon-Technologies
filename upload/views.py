@@ -13,6 +13,9 @@ def get_unique_filename(folder_path, filename):
         unique_filename = f"{original_filename}_{uuid.uuid4().hex}{file_extension}"
     return unique_filename
 
+def is_pdf(file):
+    return file.name.lower().endswith('.pdf')
+
 def upload(request):
     if request.method == 'POST' and request.FILES.get('file'):
         uploaded_file = request.FILES['file']
