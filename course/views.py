@@ -5,6 +5,8 @@ from csce4901 import settings
 from . models import Course
 from django.http import FileResponse
 from django.shortcuts import get_object_or_404
+from upload.models import PDFDocument
+from upload.models import PDFFile
 
 # Create your views here.
 def home(request):
@@ -47,18 +49,25 @@ def csce3600(request):
     
     return render(request, "course/CSCE3600.html")
 
-def view_pdf(request, folder, filename):
-    file_path = os.path.join(folder, filename)  # Adjusted file path without base_directory
+def courses(request):
+    # Query all PDFFile instances
+    uploads = PDFFile.objects.all()
 
-    if os.path.exists(file_path) and filename.endswith('.pdf'):
-        # Open the file and read its contents
+    # Pass the instances to the template
+    return render(request, 'course/courses.html', {'uploads': uploads})
+
+def view_pdf(request, pdf_id):
+    # Fetch the PDFFile instance from the database
+    pdf_file = get_object_or_404(PDFFile, id=pdf_id)  # Using ID to fetch; adjust as needed
+
+    # Serve the PDF file
+    if pdf_file.file and pdf_file.file.url.endswith('.pdf'):
         try:
-            with open(file_path, 'rb') as f:
+            with pdf_file.file.open('rb') as f:
                 response = HttpResponse(f.read(), content_type='application/pdf')
-                response['Content-Disposition'] = f'inline; filename="{filename}"'
+                response['Content-Disposition'] = f'inline; filename="{pdf_file.name}"'
                 return response
         except Exception as e:
-            # Handle exceptions if any
             print(f"Error while reading the file: {e}")
             raise Http404("PDF file cannot be opened")
     else:

@@ -29,6 +29,9 @@ DEBUG = True
 
 CSRF_TRUSTED_ORIGINS = ['https://localhost:8000']
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 # Email
 EMAIL_USE_TLS = EMAIL_USE_TLS
 EMAIL_HOST = EMAIL_HOST
