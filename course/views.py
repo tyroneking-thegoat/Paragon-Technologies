@@ -56,6 +56,14 @@ def courses(request):
     # Pass the instances to the template
     return render(request, 'course/courses.html', {'uploads': uploads})
 
+def courses(request):
+    uploads = PDFFile.objects.all().select_related('pdf_document')  # Assuming a ForeignKey relationship
+
+    return render(request, 'course/courses.html', {'uploads': uploads})
+
+def coursetitle(request):
+    uploads = PDFDocument
+
 def view_pdf(request, pdf_id):
     # Fetch the PDFFile instance from the database
     pdf_file = get_object_or_404(PDFFile, id=pdf_id)  # Using ID to fetch; adjust as needed

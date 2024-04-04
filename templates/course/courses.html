@@ -9,7 +9,9 @@
         <ul class="list-group mt-3">
             {% for upload in uploads %}
                 <li class="list-group-item">
+                    <p>Course Name: {{ upload.pdf_document }}</p>
                     {{ upload.title }} - <a href="{{ upload.file.url }}" target="_blank">View PDF</a>
+                    <!-- Display the related PDFDocument name here -->
                 </li>
             {% endfor %}
         </ul>
