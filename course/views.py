@@ -8,16 +8,13 @@ from django.shortcuts import get_object_or_404
 from upload.models import PDFDocument
 from upload.models import PDFFile
 
-# Create your views here.
 def home(request):
     
     return render(request, "course/home.html")
 
-# Create your views here.
+
 def courses(request):
-    # Get the current directory of the views.py file
     current_directory = os.path.dirname(os.path.abspath(__file__))
-    # Assuming 'pdfs' folder is in the same directory as views.py
     base_directory = os.path.join(current_directory, 'pdfs')
 
     if not os.path.exists(base_directory):
@@ -34,8 +31,6 @@ def courses(request):
 
     return render(request, 'course/courses.html', {'folders_with_files': folders_with_files})
 
-# def courses(request):
-#     return render(request, "course/courses.html")
 
 def csce1030(request):
     
@@ -50,25 +45,29 @@ def csce3600(request):
     return render(request, "course/CSCE3600.html")
 
 def courses(request):
-    # Query all PDFFile instances
     uploads = PDFFile.objects.all()
 
-    # Pass the instances to the template
+  
     return render(request, 'course/courses.html', {'uploads': uploads})
 
 def courses(request):
-    uploads = PDFFile.objects.all().select_related('pdf_document')  # Assuming a ForeignKey relationship
+    uploads = PDFFile.objects.all().select_related('pdf_document')
+    
+    documents_with_files = {}
+    for upload in uploads:
+        document_name = upload.pdf_document
+        if document_name not in documents_with_files:
+            documents_with_files[document_name] = [upload]
+        else:
+            documents_with_files[document_name].append(upload)
 
-    return render(request, 'course/courses.html', {'uploads': uploads})
-
+    return render(request, 'course/courses.html', {'documents_with_files': documents_with_files})
 def coursetitle(request):
     uploads = PDFDocument
 
 def view_pdf(request, pdf_id):
-    # Fetch the PDFFile instance from the database
-    pdf_file = get_object_or_404(PDFFile, id=pdf_id)  # Using ID to fetch; adjust as needed
+    pdf_file = get_object_or_404(PDFFile, id=pdf_id) 
 
-    # Serve the PDF file
     if pdf_file.file and pdf_file.file.url.endswith('.pdf'):
         try:
             with pdf_file.file.open('rb') as f:

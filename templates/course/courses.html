@@ -5,16 +5,17 @@
 {% block body %}
 <div class="container">
     <h2 class="mt-5">Courses</h2>
-    {% if uploads %}
-        <ul class="list-group mt-3">
-            {% for upload in uploads %}
-                <li class="list-group-item">
-                    <p>Course Name: {{ upload.pdf_document }}</p>
-                    {{ upload.title }} - <a href="{{ upload.file.url }}" target="_blank">View PDF</a>
-                    <!-- Display the related PDFDocument name here -->
-                </li>
-            {% endfor %}
-        </ul>
+    {% if documents_with_files %}
+        {% for document_name, uploads in documents_with_files.items %}
+            <h3>{{ document_name }}</h3>
+            <ul class="list-group mt-3" style="margin-bottom: 20px;"> 
+                {% for upload in uploads %}
+                    <li class="list-group-item">
+                        {{ upload.title }} - <a href="{{ upload.file.url }}" target="_blank">View PDF</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
     {% else %}
         <p>No courses available.</p>
     {% endif %}
