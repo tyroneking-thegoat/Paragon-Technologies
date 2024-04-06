@@ -17,15 +17,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from enrollment_codes import views
+from django.conf import settings
+from django.conf.urls.static import static
+# from home import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('auth.urls')),
-    path('', include('home.urls')),
-    path('home/', include('course.urls')),
+    #path('', include('home.urls')),
+    path('home/', include('home.urls')),
+    path('course/', include('course.urls')),
     path('upload/', include('upload.urls')),
     path("account/", include("account.urls")),
     path('enroll/', views.enroll, name='enrollment_codes'),
     path('check-enrollment', views.check_enrollment, name='check_enrollment'),
     path('create-class/', views.create_class, name='create_class'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
