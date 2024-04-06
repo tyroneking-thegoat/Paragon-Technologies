@@ -27,4 +27,5 @@ urlpatterns = [
     path("account/", include("account.urls")),
     path('enroll/', views.enroll, name='enrollment_codes'),
     path('check-enrollment', views.check_enrollment, name='check_enrollment'),
+    path('create-class/', views.create_class, name='create_class'),
 ]
