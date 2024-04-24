@@ -71,20 +71,19 @@
         
         <div class="container">
 			{% if documents_with_files %}
-		        {% for document_name, uploads in documents_with_files.items %}
+		    {% for document_name, uploads in documents_with_files.items %} <!-- cards tile sectioned by course name bc of fucky for loop logic rn -->
+	 			{% for upload in uploads %}
 	                {% if forloop.first %}
 	                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mb-4">
 	                {% endif %}
 	                <div class="col mb-4">
 	                    <div class="card h-100">
-	                        <img src="{{x.img.url}}" class="card-img-top" alt="...">
-	                        <div class="card-body">
-	                            <h5 class="card-title">{{document_name}}</h5>
-								{% for upload in uploads %}
+	                        	<img src="{{upload.img.url}}" class="card-img-top" alt="...">
+		                        <div class="card-body">
+		                        	<h5 class="card-title">{{document_name}}</h5>
 									<p class="card-text">{{upload.title}}</p>
-								{% endfor %}
-								<a href="{{upload.file.url}}" class="btn btn-primary" target="_blank">View Note</a>
-	                        </div>
+									<a href="{{upload.file.url}}" class="btn btn-primary" target="_blank">View Note</a>
+		                        </div>
 	                    </div>
 	                </div>
 	                {% if forloop.counter|divisibleby:4 %}
@@ -96,7 +95,8 @@
 	                {% if forloop.last and not forloop.counter|divisibleby:4 %} <!-- <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< SET MAX NUMBER OF CARDS PER ROW HERE -->
 	                        </div> <!-- close last row -->
                 	{% endif %}
-            	{% endfor %}
+				{% endfor %}
+			{% endfor %}
 			{% else %}
 				<p>No Notes Available.</p>
 			{% endif %}

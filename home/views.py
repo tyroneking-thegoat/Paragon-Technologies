@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Thumbnail
+# from .models import Thumbnail
 from upload.models import PDFDocument, PDFFile
 
 # Create your views here.
