@@ -70,8 +70,7 @@
         {% block content %}
         
         <div class="container">
-			{% if documents_with_files %}
-		    {% for document_name, uploads in documents_with_files.items %} <!-- cards tile sectioned by course name bc of fucky for loop logic rn -->
+			{% if uploads %}
 	 			{% for upload in uploads %}
 	                {% if forloop.first %}
 	                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mb-4">
@@ -96,9 +95,6 @@
 	                        </div> <!-- close last row -->
                 	{% endif %}
 				{% endfor %}
-			{% endfor %}
-			{% else %}
-				<p>No Notes Available.</p>
 			{% endif %}
         </div>
 

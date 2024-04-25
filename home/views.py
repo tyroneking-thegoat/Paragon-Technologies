@@ -24,4 +24,4 @@ def home(request):
         else:
             documents_with_files[document_name].append(upload)
 
-    return render(request, 'course/home.html', {'documents_with_files': documents_with_files})
+    return render(request, 'course/home.html', {'uploads': uploads})
