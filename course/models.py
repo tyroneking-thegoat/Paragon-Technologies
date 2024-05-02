@@ -13,6 +13,9 @@ class Course(models.Model):
         if existing_courses.exists():
             raise ValidationError("A course with this name and number already exists.")
 
-    def __str__(self):
+    def full_name(self):
         return f"{self.name}{self.number}"
+
+    def __str__(self):
+        return self.full_name()
 

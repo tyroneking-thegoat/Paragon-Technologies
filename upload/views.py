@@ -3,6 +3,7 @@ from django.http import Http404
 from .models import PDFDocument, PDFFile
 from django.core.files.storage import FileSystemStorage
 import os
+from course.models import Course
 from django.conf import settings
 import uuid
 
@@ -51,11 +52,13 @@ def upload(request):
         pdf_file.save()
         
         # Fetch course names from the database
-        course_names = PDFDocument.objects.values_list('title', flat=True)
+        courses = Course.objects.all()
+        course_names = [course.full_name() for course in courses]
 
         return render(request, 'upload/success.html', {'uploaded_file_url': uploaded_file_url, 'course_names': course_names})
 
     # Fetch course names from the database
-    course_names = PDFDocument.objects.values_list('title', flat=True)
+    courses = Course.objects.all()
+    course_names = [course.full_name() for course in courses]
 
     return render(request, 'upload/uploads.html', {'course_names': course_names})
